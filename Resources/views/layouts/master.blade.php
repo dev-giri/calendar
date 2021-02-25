@@ -1,0 +1,2 @@
+@extends('theme::layouts.contentLayoutMaster')
+

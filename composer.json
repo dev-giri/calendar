@@ -1,0 +1,27 @@
+{
+    "name": "girisoft/calendar",
+    "version": "dev-master",
+    "description": "The Calendar module of girisoft",
+    "authors": [
+        {
+            "name": "Dev Giri",
+            "email": "dev.giridhari@gmail.com"
+        }
+    ],
+    "require": {
+        
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Calendar\\": ""
+        }
+    }
+}
