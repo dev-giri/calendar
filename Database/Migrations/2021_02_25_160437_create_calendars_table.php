@@ -17,8 +17,8 @@ class CreateCalendarsTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('lable');
-            $table->integer('start');
-            $table->integer('end');
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
             $table->boolean('allDay')->default(false);
             $table->string('url')->nullable();
             $table->string('location')->nullable();

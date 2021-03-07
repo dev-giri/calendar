@@ -2,6 +2,7 @@
 
 namespace Modules\Calendar\Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Models\Permission;
@@ -12,6 +13,8 @@ use TCG\Voyager\Models\DataRow;
 use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Models\MenuItem;
 use Modules\Calendar\Entities\Calendar;
+use Modules\Calendar\Entities\CalendarType;
+use App\User;
 
 class CalendarBreadTableSeeder extends Seeder
 {
@@ -25,7 +28,7 @@ class CalendarBreadTableSeeder extends Seeder
             'slug'                  => 'calendars',
             'display_name_singular' => 'Calendar',
             'display_name_plural'   => 'Calendars',
-            'icon'                  => 'voyager-file-text',
+            'icon'                  => 'voyager-calendar',
             'model_name'            => Calendar::class,
             'controller'            => null,
             'generate_permissions'  => 1,
@@ -52,6 +55,166 @@ class CalendarBreadTableSeeder extends Seeder
                 'details'      => '',
                 'order'        => 1,
             ],
+            'host_id' => [
+                'type'         => 'number',
+                'display_name' => 'Host ID',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => '',
+                'order'        => 2,
+            ],
+            'title' => [
+                'type'         => 'text',
+                'display_name' => 'Title',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => '',
+                'order'        => 3,
+            ],
+            'lable' => [
+                'type'         => 'number',
+                'display_name' => 'lable_id',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 4,
+            ],
+            'start' => [
+                'type'         => 'date_time',
+                'display_name' => 'Start',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    'format'=>'M d, Y g:i A'
+                ],
+                'order'        => 5,
+            ],
+            'end' => [
+                'type'         => 'date_time',
+                'display_name' => 'End',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    'format'=>'M d, Y g:i A'
+                ],
+                'order'        => 6,
+            ],
+            'allDay' => [
+                'type'         => 'checkbox',
+                'display_name' => 'All Day',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "true" => "True",
+                    "false" => "False",
+                    "checked" => false
+                ],
+                'order'        => 7,
+            ],
+            'url' => [
+                'type'         => 'text',
+                'display_name' => 'URL',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => '',
+                'order'        => 8,
+            ],
+            'location' => [
+                'type'         => 'text',
+                'display_name' => 'Location',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => '',
+                'order'        => 9,
+            ],
+            'description' => [
+                'type'         => 'text',
+                'display_name' => 'Description',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => '',
+                'order'        => 10,
+            ],
+            'calendar_belongsto_calendar_type_relationship' => [
+                'type'         => 'relationship',
+                'display_name' => 'Lable',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    'model' => CalendarType::class,
+                    'table' => 'calendar_types',
+                    'type' => 'belongsTo',
+                    'column' => 'lable',
+                    'key' => 'id',
+                    'label' => 'display',
+                    'pivot_table' => '',
+                    'pivot' => '0',
+                    'taggable' => '',
+                ],
+                'order'        => 11,
+            ],
+            'calendar_belongsto_user_relationship' => [
+                'type'         => 'relationship',
+                'display_name' => 'Hosted',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    'model' => User::class,
+                    'table' => 'users',
+                    'type' => 'belongsTo',
+                    'column' => 'host_id',
+                    'key' => 'id',
+                    'label' => 'name',
+                    'pivot_table' => '',
+                    'pivot' => '0',
+                    'taggable' => '',
+                ],
+                'order'        => 12,
+            ],
             'created_at' => [
                 'type'         => 'timestamp',
                 'display_name' => 'created_at',
@@ -62,7 +225,7 @@ class CalendarBreadTableSeeder extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 2,
+                'order'        => 13,
             ],
             'updated_at' => [
                 'type'         => 'timestamp',
@@ -74,7 +237,7 @@ class CalendarBreadTableSeeder extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 3,
+                'order'        => 14,
             ]
         ];
     }
@@ -87,15 +250,56 @@ class CalendarBreadTableSeeder extends Seeder
             'url'         => '',
             'route'       => 'voyager.calendars.index',
             'target'      => '_self',
-            'icon_class'  => 'voyager-file-text',
+            'icon_class'  => 'voyager-calendar',
             'color'       => null,
             'parent_id'   => null,
             'parameters' => null,
-            'order'       => 10,
+            'order'       => 14,
         ];
     }
 
-    
+    public function createAdditional()
+    {
+        $dataType = CalendarType::firstOrNew(['slug' => 'personal']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'slug'                  => 'personal',
+                'display'           => 'Personal',
+            ])->save();
+        }
+
+        $dataType = CalendarType::firstOrNew(['slug' => 'business']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'slug'                  => 'business',
+                'display'           => 'Business',
+            ])->save();
+        }
+
+        $dataType = CalendarType::firstOrNew(['slug' => 'family']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'slug'                  => 'family',
+                'display'           => 'Family',
+            ])->save();
+        }
+
+        $dataType = CalendarType::firstOrNew(['slug' => 'holiday']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'slug'                  => 'holiday',
+                'display'           => 'Holiday',
+            ])->save();
+        }
+
+        $dataType = CalendarType::firstOrNew(['slug' => 'etc']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'slug'                  => 'etc',
+                'display'           => 'ETC',
+            ])->save();
+        }
+    }    
 
     /**
      * Run the database seeds.
@@ -104,25 +308,158 @@ class CalendarBreadTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->createAdditional();
         $this->createDataType();
         $this->createInputFields();
         $this->createMenuItem();
-        $this->generatePermissions();
-
-        // //Model::unguard();
-        // Permission::generateFor('calendars');
-
-        // $role = Role::where('name', 'admin')->firstOrFail();
-
-        // $permissions = Permission::all();
-
-        // $role->permissions()->sync(
-        //     $permissions->pluck('id')->all()
-        // );
         
+        
+        //dummy data
+        $this->createDummyData();
+
+        $this->generatePermissions();
     }
 
-            /**
+    public function createDummyData()
+    {
+        $date = Carbon::now();
+        // $today = Carbon::today();
+        // $nextDay = Carbon::tomorrow()->timestamp;
+        // $nextMonth = $date->addMonth()->timestamp;
+        // $prevMonth = $date->subMonth()->timestamp;
+
+        $dataType = Calendar::firstOrNew(['title' => 'Design Review']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => 'Design Review',
+                'lable'           => 2,
+                'url'             => '',
+                'start'           => Carbon::today(),
+                'end'             => Carbon::tomorrow(),
+                'allDay'          => false,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => 'Meeting With Client']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => 'Meeting With Client',
+                'lable'           => 2,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 10, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 11, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => 'Family Trip']);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => 'Family Trip',
+                'lable'           => 4,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 7, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 9, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Doctor's Appointment"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Doctor's Appointment",
+                'lable'           => 1,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 10, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 11, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Dart Game?"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Dart Game?",
+                'lable'           => 5,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 12, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 13, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Meditation"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Meditation",
+                'lable'           => 1,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 15, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 16, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Dinner"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Dinner",
+                'lable'           => 3,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 18, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 19, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Product Review"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Product Review",
+                'lable'           => 2,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month, 20, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month, 21, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Monthly Meeting"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Monthly Meeting",
+                'lable'           => 2,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month+1, 1, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month+1, 1, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+
+        $dataType = Calendar::firstOrNew(['title' => "Monthly Checkup"]);
+        if (! $dataType->exists) {
+            $dataType->fill([
+                'host_id'         => 1,
+                'title'           => "Monthly Checkup",
+                'lable'           => 1,
+                'url'             => '',
+                'start'           => Carbon::create($date->year, $date->month-1, 1, 0, 0, 0),
+                'end'             => Carbon::create($date->year, $date->month-1, 1, 0, 0, 0),
+                'allDay'          => true,
+            ])->save();
+        }
+    }
+
+    /**
      * Create a new data-type for the current bread
      *
      * @return void

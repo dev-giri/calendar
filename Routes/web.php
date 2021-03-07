@@ -13,4 +13,8 @@
 
 Route::prefix('calendar')->group(function() {
     Route::get('/', 'CalendarController@index');
+    Route::post('/', 'CalendarController@store');
+    Route::post('/{id}', 'CalendarController@update');
+    Route::post('/{id}/delete', 'CalendarController@destroy');
+    Route::get('/events', 'CalendarController@events');
 });

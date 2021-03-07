@@ -9,7 +9,9 @@ class Calendar extends Model
 {
     //use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'host_id', 'title', 'start', 'end', 'lable', 'description', 'url', 'address'
+        ];
     
     // protected static function newFactory()
     // {

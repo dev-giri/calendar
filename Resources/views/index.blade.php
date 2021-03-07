@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ asset('themes/girisoft/css/base/plugins/forms/pickers/form-flat-pickr.css') }}">
   <link rel="stylesheet" href="{{ asset('themes/girisoft/css/base/plugins/forms/form-validation.css') }}">
 
+
   <link rel="stylesheet" href="{{ mix('css/calendar.css') }}"> 
 @endsection
 
@@ -27,12 +28,17 @@
         <div class="sidebar-wrapper">
           <div class="card-body d-flex justify-content-center">
             <button
+              class="btn btn-primary btn-block" id="addANewEvent"
+            >
+              <span class="align-middle">Add Event</span>
+            </button>
+            <!-- <button
               class="btn btn-primary btn-toggle-sidebar btn-block"
               data-toggle="modal"
               data-target="#add-new-sidebar"
             >
               <span class="align-middle">Add Event</span>
-            </button>
+            </button> -->
           </div>
           <div class="card-body pb-0">
             <h5 class="section-label mb-1">
@@ -121,14 +127,16 @@
           <h5 class="modal-title">Add Event</h5>
         </div>
         <div class="modal-body flex-grow-1 pb-sm-0 pb-3">
-          <form class="event-form needs-validation" data-ajax="false" novalidate>
+          <form role="form" class="event-form needs-validation" method="POST" enctype="multipart/form-data" id="add-edit-event-form" data-ajax="false" novalidate>
+            <!-- CSRF TOKEN -->
+            {{ csrf_field() }}
             <div class="form-group">
               <label for="title" class="form-label">Title</label>
               <input type="text" class="form-control" id="title" name="title" placeholder="Event Title" required />
             </div>
             <div class="form-group">
               <label for="select-label" class="form-label">Label</label>
-              <select class="select2 select-label form-control w-100" id="select-label" name="select-label">
+              <select class="select2 select-label form-control w-100" id="select-label" name="label">
                 <option data-label="primary" value="Business" selected>Business</option>
                 <option data-label="danger" value="Personal">Personal</option>
                 <option data-label="warning" value="Family">Family</option>
@@ -138,21 +146,21 @@
             </div>
             <div class="form-group position-relative">
               <label for="start-date" class="form-label">Start Date</label>
-              <input type="text" class="form-control" id="start-date" name="start-date" placeholder="Start Date" />
+              <input type="text" class="form-control" id="start-date" name="start" placeholder="Start Date" required data-date-format="F d, Y G:i K" />
             </div>
             <div class="form-group position-relative">
               <label for="end-date" class="form-label">End Date</label>
-              <input type="text" class="form-control" id="end-date" name="end-date" placeholder="End Date" />
+              <input type="text" class="form-control" id="end-date" name="end" placeholder="End Date" required data-date-format="F d, Y G:i K" />
             </div>
             <div class="form-group">
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input allDay-switch" id="customSwitch3" />
+                <input type="checkbox" class="custom-control-input allDay-switch" id="customSwitch3" name="allDay" />
                 <label class="custom-control-label" for="customSwitch3">All Day</label>
               </div>
             </div>
             <div class="form-group">
               <label for="event-url" class="form-label">Event URL</label>
-              <input type="url" class="form-control" id="event-url" placeholder="https://www.google.com" />
+              <input type="url" class="form-control" id="event-url" placeholder="https://www.google.com" name="url" />
             </div>
             <div class="form-group select2-primary">
               <label for="event-guests" class="form-label">Add Guests</label>
@@ -167,11 +175,11 @@
             </div>
             <div class="form-group">
               <label for="event-location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="event-location" placeholder="Enter Location" />
+              <input type="text" class="form-control" id="event-location" placeholder="Enter Location" name="location"/>
             </div>
             <div class="form-group">
               <label class="form-label">Description</label>
-              <textarea name="event-description-editor" id="event-description-editor" class="form-control"></textarea>
+              <textarea name="description" id="event-description-editor" class="form-control" ></textarea>
             </div>
             <div class="form-group d-flex">
               <button type="submit" class="btn btn-primary add-event-btn mr-1">Add</button>
@@ -199,127 +207,5 @@
 @endsection
 @section('page-script')
   <!-- Page js files -->
-  <!-- <script src="{{ mix('js/calendarEvents.js') }}"></script> -->
-  <script type="text/javascript">
-    var date = new Date();
-    var nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    // prettier-ignore
-    var nextMonth = date.getMonth() === 11 ? new Date(date.getFullYear() + 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    // prettier-ignore
-    var prevMonth = date.getMonth() === 11 ? new Date(date.getFullYear() - 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() - 1, 1);
-
-    var events = [
-        {
-          id: 1,
-          url: '',
-          title: 'Design Review',
-          start: date,
-          end: nextDay,
-          allDay: false,
-          extendedProps: {
-            calendar: 'Business'
-          }
-        },
-        {
-          id: 2,
-          url: '',
-          title: 'Meeting With Client',
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
-          allDay: true,
-          extendedProps: {
-            calendar: 'Business'
-          }
-        },
-        {
-          id: 3,
-          url: '',
-          title: 'Family Trip',
-          allDay: true,
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -9),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -7),
-          extendedProps: {
-            calendar: 'Holiday'
-          }
-        },
-        {
-          id: 4,
-          url: '',
-          title: "Doctor's Appointment",
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
-          allDay: true,
-          extendedProps: {
-            calendar: 'Personal'
-          }
-        },
-        {
-          id: 5,
-          url: '',
-          title: 'Dart Game?',
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -13),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -12),
-          allDay: true,
-          extendedProps: {
-            calendar: 'ETC'
-          }
-        },
-        {
-          id: 6,
-          url: '',
-          title: 'Meditation',
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -13),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -12),
-          allDay: true,
-          extendedProps: {
-            calendar: 'Personal'
-          }
-        },
-        {
-          id: 7,
-          url: '',
-          title: 'Dinner',
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -13),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -12),
-          allDay: true,
-          extendedProps: {
-            calendar: 'Family'
-          }
-        },
-        {
-          id: 8,
-          url: '',
-          title: 'Product Review',
-          start: new Date(date.getFullYear(), date.getMonth() + 1, -13),
-          end: new Date(date.getFullYear(), date.getMonth() + 1, -12),
-          allDay: true,
-          extendedProps: {
-            calendar: 'Business'
-          }
-        },
-        {
-          id: 9,
-          url: '',
-          title: 'Monthly Meeting',
-          start: nextMonth,
-          end: nextMonth,
-          allDay: true,
-          extendedProps: {
-            calendar: 'Business'
-          }
-        },
-        {
-          id: 10,
-          url: '',
-          title: 'Monthly Checkup',
-          start: prevMonth,
-          end: prevMonth,
-          allDay: true,
-          extendedProps: {
-            calendar: 'Personal'
-          }
-        }
-      ];
-  </script>
   <script src="{{ mix('js/calendar.js') }}"></script>
 @endsection
