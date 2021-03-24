@@ -265,6 +265,7 @@ class CalendarBreadTableSeeder extends Seeder
             $dataType->fill([
                 'slug'                  => 'personal',
                 'display'           => 'Personal',
+                'color'           => 'danger',
             ])->save();
         }
 
@@ -273,6 +274,7 @@ class CalendarBreadTableSeeder extends Seeder
             $dataType->fill([
                 'slug'                  => 'business',
                 'display'           => 'Business',
+                'color'           => 'primary',
             ])->save();
         }
 
@@ -281,6 +283,7 @@ class CalendarBreadTableSeeder extends Seeder
             $dataType->fill([
                 'slug'                  => 'family',
                 'display'           => 'Family',
+                'color'           => 'warning',
             ])->save();
         }
 
@@ -289,6 +292,7 @@ class CalendarBreadTableSeeder extends Seeder
             $dataType->fill([
                 'slug'                  => 'holiday',
                 'display'           => 'Holiday',
+                'color'           => 'success',
             ])->save();
         }
 
@@ -297,6 +301,7 @@ class CalendarBreadTableSeeder extends Seeder
             $dataType->fill([
                 'slug'                  => 'etc',
                 'display'           => 'ETC',
+                'color'           => 'info',
             ])->save();
         }
     }    

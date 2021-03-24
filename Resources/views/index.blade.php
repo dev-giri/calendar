@@ -49,50 +49,18 @@
               <label class="custom-control-label" for="select-all">View All</label>
             </div>
             <div class="calendar-events-filter">
-              <div class="custom-control custom-control-danger custom-checkbox mb-1">
+              @foreach($calendarTypes as $row)
+              <div class="custom-control custom-control-{{$row->color}} custom-checkbox mb-1">
                 <input
                   type="checkbox"
                   class="custom-control-input input-filter"
-                  id="personal"
-                  data-value="personal"
+                  id="{{$row->color}}"
+                  data-value="{{$row->slug}}"
                   checked
                 />
-                <label class="custom-control-label" for="personal">Personal</label>
+                <label class="custom-control-label" for="{{$row->color}}">{{$row->display}}</label>
               </div>
-              <div class="custom-control custom-control-primary custom-checkbox mb-1">
-                <input
-                  type="checkbox"
-                  class="custom-control-input input-filter"
-                  id="business"
-                  data-value="business"
-                  checked
-                />
-                <label class="custom-control-label" for="business">Business</label>
-              </div>
-              <div class="custom-control custom-control-warning custom-checkbox mb-1">
-                <input
-                  type="checkbox"
-                  class="custom-control-input input-filter"
-                  id="family"
-                  data-value="family"
-                  checked
-                />
-                <label class="custom-control-label" for="family">Family</label>
-              </div>
-              <div class="custom-control custom-control-success custom-checkbox mb-1">
-                <input
-                  type="checkbox"
-                  class="custom-control-input input-filter"
-                  id="holiday"
-                  data-value="holiday"
-                  checked
-                />
-                <label class="custom-control-label" for="holiday">Holiday</label>
-              </div>
-              <div class="custom-control custom-control-info custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-filter" id="etc" data-value="etc" checked />
-                <label class="custom-control-label" for="etc">ETC</label>
-              </div>
+              @endforeach
             </div>
           </div>
         </div>
@@ -136,7 +104,7 @@
             </div>
             <div class="form-group">
               <label for="select-label" class="form-label">Label</label>
-              <select class="select2 select-label form-control w-100" id="select-label" name="label">
+              <select class=" select-label form-control w-100" id="select-label" name="label">
                 <option data-label="primary" value="Business" selected>Business</option>
                 <option data-label="danger" value="Personal">Personal</option>
                 <option data-label="warning" value="Family">Family</option>
@@ -164,13 +132,19 @@
             </div>
             <div class="form-group select2-primary">
               <label for="event-guests" class="form-label">Add Guests</label>
-              <select class="select2 select-add-guests form-control w-100" id="event-guests" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
+              <select class=" select-add-guests form-control w-100" id="event-guests" multiple>
+                @if(isset($users))
+                @foreach($users as $user)
+                <option data-avatar="{{$user->avatar}}" value="{{$user->username}}">{{$user->name}}</option>
+                @endforeach
+                @else
+                <option data-avatar="1-small.png" value="Jane Foster">
                 <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
                 <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
                 <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
                 <option data-avatar="9-small.png" value="Sandy Vega">Sandy Vega</option>
                 <option data-avatar="11-small.png" value="Cheryl May">Cheryl May</option>
+                @endif
               </select>
             </div>
             <div class="form-group">
@@ -201,7 +175,7 @@
   <!-- Vendor js files -->
   <script src="{{ asset('themes/girisoft/vendors/js/calendar/fullcalendar.min.js') }}"></script>
   <script src="{{ asset('themes/girisoft/vendors/js/extensions/moment.min.js') }}"></script>
-  <script src="{{ asset('themes/girisoft/vendors/js/forms/select/select2.full.min.js') }}"></script>
+  <!-- <script src="{{ asset('themes/girisoft/vendors/js/forms/select/select2.full.min.js') }}"></script> -->
   <script src="{{ asset('themes/girisoft/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
   <script src="{{ asset('themes/girisoft/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
 @endsection

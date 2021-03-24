@@ -11,6 +11,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Models\DataType;
 use Illuminate\Routing\Controller;
 use Carbon\Carbon;
+use App\User;
 use Auth;
 
 class CalendarController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
@@ -27,9 +28,11 @@ class CalendarController extends \TCG\Voyager\Http\Controllers\VoyagerBaseContro
      */
     public function index(Request $request)
     {
-        //dd('hi');
         $pageConfigs = ['pageHeader' => false];
-        return view('calendar::index', ['pageConfigs' => $pageConfigs]);
+        $calendarTypes = CalendarType::get();
+        $users = User::select(['id','name','email','username','avatar'])->get();
+        //dd($users);
+        return view('calendar::index', ['pageConfigs' => $pageConfigs,'calendarTypes'=>$calendarTypes,'users'=>$users]);
     }
 
     public function events(Request $request)

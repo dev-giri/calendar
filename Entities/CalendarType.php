@@ -9,7 +9,7 @@ class CalendarType extends Model
 {
     //use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = ['slug','display','color'];
     
     // protected static function newFactory()
     // {

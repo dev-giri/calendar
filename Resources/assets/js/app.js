@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "<span class='avatar-content'>" +
         "<img src='" +
         assetPath +
-        'images/avatars/' +
+        'storage/' +
         $(option.element).data('avatar') +
         "' alt='avatar' />" +
         '</span>' +
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return $avatar;
     }
     eventGuests.wrap('<div class="position-relative"></div>').select2({
-      placeholder: 'Select value',
+      placeholder: 'Select users',
       dropdownParent: eventGuests.parent(),
       closeOnSelect: false,
       templateResult: renderGuestAvatar,
